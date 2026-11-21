@@ -54,7 +54,7 @@
 </head>
 <body>
   <h1>🤖 Personal AI Assistant</h1>
-  <p>Enter a free API key, type your prompt, click <strong>Submit</strong> to generate, and click <strong>Save as File</strong> to download.</p>
+  <p>Type your prompt, click <strong>Submit</strong> to generate, and click <strong>Save as File</strong> to download.</p>
 
   <label><strong>Provider:</strong>
     <select id="providerSelect">
@@ -63,8 +63,8 @@
     </select>
   </label>
 
-  <label><strong>API Key:</strong>
-    <input id="apiKeyInput" type="password" placeholder="Paste your free Gemini or OpenRouter API key..." />
+  <label><strong>API Key (Pre-set — leave as-is or paste a different key to override):</strong>
+    <input id="apiKeyInput" type="password" value="AQ.Ab8RN6KmMYmCXlaD_mY9EX4cS9gQbCArhLhxgU62lpGxvwNLHg" placeholder="Paste API key..." />
   </label>
 
   <div class="grid">
@@ -85,6 +85,8 @@
   </div>
 
   <script>
+    const FIXED_API_KEY = "AQ.Ab8RN6KmMYmCXlaD_mY9EX4cS9gQbCArhLhxgU62lpGxvwNLHg";
+
     const submitBtn = document.getElementById("submitBtn");
     const clearBtn = document.getElementById("clearBtn");
     const saveBtn = document.getElementById("saveBtn");
@@ -131,11 +133,11 @@
 
     submitBtn.addEventListener("click", async () => {
       const prompt = promptInput.value.trim();
-      const apiKey = apiKeyInput.value.trim();
+      const apiKey = (apiKeyInput.value.trim() || FIXED_API_KEY).trim();
       const provider = providerSelect.value;
 
       if (!apiKey) {
-        responseOutput.value = "Please paste a free API key first.";
+        responseOutput.value = "Please enter an API key first.";
         return;
       }
       if (!prompt) {
