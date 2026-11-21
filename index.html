@@ -24,7 +24,7 @@
     @media (max-width: 700px) {
       .grid { grid-template-columns: 1fr; }
     }
-    textarea, input, select {
+    textarea, select {
       width: 100%;
       box-sizing: border-box;
       padding: 10px;
@@ -58,13 +58,9 @@
 
   <label><strong>Provider:</strong>
     <select id="providerSelect">
+      <option value="gemini" selected>Google Gemini</option>
       <option value="openrouter">OpenRouter (Free models)</option>
-      <option value="gemini" selected>Google Gemini (Free tier)</option>
     </select>
-  </label>
-
-  <label><strong>API Key (Pre-set — leave as-is or paste a different key to override):</strong>
-    <input id="apiKeyInput" type="password" value="AQ.Ab8RN6KmMYmCXlaD_mY9EX4cS9gQbCArhLhxgU62lpGxvwNLHg" placeholder="Paste API key..." />
   </label>
 
   <div class="grid">
@@ -85,13 +81,12 @@
   </div>
 
   <script>
-    const FIXED_API_KEY = "AQ.Ab8RN6KmMYmCXlaD_mY9EX4cS9gQbCArhLhxgU62lpGxvwNLHg";
+    const FIXED_API_KEY = "";
 
     const submitBtn = document.getElementById("submitBtn");
     const clearBtn = document.getElementById("clearBtn");
     const saveBtn = document.getElementById("saveBtn");
     const providerSelect = document.getElementById("providerSelect");
-    const apiKeyInput = document.getElementById("apiKeyInput");
     const promptInput = document.getElementById("promptInput");
     const responseOutput = document.getElementById("responseOutput");
 
@@ -133,13 +128,8 @@
 
     submitBtn.addEventListener("click", async () => {
       const prompt = promptInput.value.trim();
-      const apiKey = (apiKeyInput.value.trim() || FIXED_API_KEY).trim();
       const provider = providerSelect.value;
 
-      if (!apiKey) {
-        responseOutput.value = "Please enter an API key first.";
-        return;
-      }
       if (!prompt) {
         responseOutput.value = "Please enter a prompt first.";
         return;
@@ -150,8 +140,8 @@
 
       try {
         const reply = provider === "gemini"
-          ? await callGemini(apiKey, prompt)
-          : await callOpenRouter(apiKey, prompt);
+          ? await callGemini(FIXED_API_KEY, prompt)
+          : await callOpenRouter(FIXED_API_KEY, prompt);
         responseOutput.value = reply;
       } catch (err) {
         responseOutput.value = `Error: ${err.message}`;
