@@ -58,13 +58,13 @@
 
   <label><strong>Provider:</strong>
     <select id="providerSelect">
-      <option value="openrouter" selected>OpenRouter (Free models)</option>
-      <option value="gemini">Google Gemini (Free tier)</option>
+      <option value="openrouter">OpenRouter (Free models)</option>
+      <option value="gemini" selected>Google Gemini (Free tier)</option>
     </select>
   </label>
 
   <label><strong>API Key:</strong>
-    <input id="apiKeyInput" type="password" placeholder="Paste your free OpenRouter or Gemini API key..." />
+    <input id="apiKeyInput" type="password" placeholder="Paste your free Gemini or OpenRouter API key..." />
   </label>
 
   <div class="grid">
@@ -112,7 +112,7 @@
       return data.choices?.[0]?.message?.content?.trim() || "Empty response.";
     }
 
-   async function callGemini(apiKey, prompt) {
+    async function callGemini(apiKey, prompt) {
       const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
       const res = await fetch(url, {
         method: "POST",
